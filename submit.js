@@ -7,6 +7,10 @@ $(document).ready(function() {
     }
 });
 
+$(window).on( "load", function() {
+    console.log( "window loaded" );
+});
+
 function isAPIAvailable() {
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -33,6 +37,7 @@ function isAPIAvailable() {
 var id = [];
 var lat = [];
 var lon = [];
+var data;
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -52,6 +57,7 @@ function handleFileSelect(evt) {
 
         // read the file contents
         printTable(file);
+		
     }
 
     // post the results
@@ -63,7 +69,7 @@ function printTable(file) {
     reader.readAsText(file);
     reader.onload = function(event) {
         var csv = event.target.result;
-        window.data = $.csv.toArrays(csv);
+        data = $.csv.toArrays(csv);
         var html = '';
         for (var row in data) {
             //html += '<tr>\r\n';
@@ -79,17 +85,17 @@ function printTable(file) {
 					*/
         }
         //$('#contents').html(html);
+		console.log(id);
+		console.log(lat);
+		console.log(lon);
 
+		console.log(id[3]);
     };
     reader.onerror = function() {
         alert('Unable to read ' + file.fileName);
     };
 }
 
-console.log(id);
-console.log(lat);
-console.log(lon);
 
-console.log(id.pop());
 
 
