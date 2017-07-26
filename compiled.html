@@ -41,8 +41,16 @@
 	-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="jquery.csv.js"></script>
-	<script src = "submit.js";></script>
+	<script src = "submit.js";>	
+	</script>
     <script>
+		var id = [];
+		var lat = [];
+		var lon = [];
+		
+		
+		
+		
         var map;
 
         function initMap() {
@@ -75,16 +83,18 @@
             }
         }
 		*/
-		
-		console.log(lat[1] + "," + lon[2]);
-		for(var i = 0; i < id.length; i++) {
+		var myTimer = window.setTimeout(function() {
+			console.log(data);
+			for(var i = 0; i < id.length; i++) {
 			    var latLng = new google.maps.LatLng(lat[i], lon[i]);
-				
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map
                 });
-		}
+			}
+		}, 5000);
+
+		
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCd3cjlKBlyvG3a-0iwrYuvpxOxHoJRes&callback=initMap">
     </script>
