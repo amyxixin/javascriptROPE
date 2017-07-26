@@ -1,15 +1,17 @@
 // script to upload and read csv files
 
+var data;
 
 $(document).ready(function() {
     if (isAPIAvailable()) {
         $('#files').bind('change', handleFileSelect);
+		window.callback = function() {
+			
+		}
+		
     }
 });
 
-$(window).on( "load", function() {
-    console.log( "window loaded" );
-});
 
 function isAPIAvailable() {
     // Check for the various File API support.
@@ -34,68 +36,36 @@ function isAPIAvailable() {
     }
 }
 
-var id = [];
-var lat = [];
-var lon = [];
-var data;
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
-
-    for (var i = 0; i < files.length; i++) { //range!!!!!!!!!!
-
+    for (var i = 0; i < files.length; i++) {
         var file = files[i];
-
-        /*
-        // read the file metadata
-        var output = ''
-        output += '<span style="font-weight:bold;">' + escape(file.name) + '</span><br />\n';
-        output += ' - FileType: ' + (file.type || 'n/a') + '<br />\n';
-        output += ' - FileSize: ' + file.size + ' bytes<br />\n';
-        output += ' - LastModified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '<br />\n';
-        */
-
         // read the file contents
-        printTable(file);
-		
+        printTable(file, initMap);
     }
-
-    // post the results
-    //$('#list').append(output);
 }
 
-function printTable(file) {
+function printTable(file, callback) {
     var reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function(event) {
         var csv = event.target.result;
         data = $.csv.toArrays(csv);
-        var html = '';
         for (var row in data) {
-            //html += '<tr>\r\n';
             id.push(data[row][0]);
             lat.push(data[row][1]);
             lon.push(data[row][2]);
-
-            /*
-                    for (var item in data[row]) {
-                        html += '<td>' + data[row][item] + '</td>\r\n';
-                    }
-                    html += '</tr>\r\n';
-					*/
         }
-        //$('#contents').html(html);
-		console.log(id);
-		console.log(lat);
-		console.log(lon);
-
-		console.log(id[3]);
+		console.log(data);
+		callback && 
+		callback(data);
     };
     reader.onerror = function() {
         alert('Unable to read ' + file.fileName);
     };
 }
 
-
-
-
+var myTimer = window.setTimeout(function() {
+    console.log(data);
+}, 5000);
