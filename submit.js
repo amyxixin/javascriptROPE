@@ -1,13 +1,13 @@
 // script to upload and read csv files
 
 var data;
+var files;
 
 $(document).ready(function() {
     if (isAPIAvailable()) {
-        $('#files').bind('change', handleFileSelect);
-		window.callback = function() {
 			
-		}
+			$('#files').bind('change', handleFileSelect);
+			
 		
     }
 });
@@ -39,14 +39,17 @@ function isAPIAvailable() {
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
+	
     for (var i = 0; i < files.length; i++) {
         var file = files[i];
         // read the file contents
-        printTable(file, initMap);
+		setInterval(printTable, 10000, file);
+        
     }
 }
 
 function printTable(file, callback) {
+	
     var reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function(event) {
@@ -65,7 +68,8 @@ function printTable(file, callback) {
         alert('Unable to read ' + file.fileName);
     };
 }
-
+/*
 var myTimer = window.setTimeout(function() {
     console.log(data);
-}, 5000);
+}, 10000);
+*/
