@@ -78,14 +78,14 @@
             }
         }
 		*/
-
 		var myTimer = window.setInterval(function() {
 			console.log(data);
 			for(var i = 0; i < data.length; i++) {
 			    var latLng = new google.maps.LatLng(lat[i], lon[i]);
                 var marker = new google.maps.Marker({
                     position: latLng,
-                    map: map
+                    map: map,
+					icon: 'https://files.slack.com/files-pri/T0R9PEZB8-F6EPSQQTF/untitled__1_.png'
                 });
 				markers.push(marker);
 			}
