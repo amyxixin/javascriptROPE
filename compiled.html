@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Demo - CSV-to-Table</title>
+    <title>Real-Time Position of Streetcars</title>
     <style>
         /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -44,13 +44,8 @@
 	<script src = "submit.js";>	
 	</script>
     <script>
-		var id = [];
-		var lat = [];
-		var lon = [];
-		
-		
-		
-		
+
+		var markers = [];
         var map;
 
         function initMap() {
@@ -83,16 +78,31 @@
             }
         }
 		*/
+
 		var myTimer = window.setInterval(function() {
 			console.log(data);
-			for(var i = 0; i < id.length; i++) {
+			for(var i = 0; i < data.length; i++) {
 			    var latLng = new google.maps.LatLng(lat[i], lon[i]);
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map
                 });
+				markers.push(marker);
 			}
-		}, 10000);
+		}, 5000);
+		
+		var myTime = 9999;
+		var n = 0;
+		var myTimer = window.setInterval(function() {
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setMap(null);
+			}
+			markers = [];
+			n = n+1;
+			myTime = (myTime*n) + (n-1);
+			console.log(n);
+			console.log(myTime);
+		}, myTime);
 
 		
     </script>
