@@ -59,9 +59,9 @@ function printTable(file, callback) {
         var csv = event.target.result;
         data = $.csv.toArrays(csv);
         for (var row in data) {
-            id.push(data[row][0]);
-            lat.push(data[row][1]);
-            lon.push(data[row][2]);
+            id.push(data[row][1]);
+            lat.push(data[row][2]);
+            lon.push(data[row][3]);
         }
 		console.log(data);
     };
