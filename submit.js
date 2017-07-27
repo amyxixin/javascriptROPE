@@ -49,7 +49,10 @@ function handleFileSelect(evt) {
 }
 
 function printTable(file, callback) {
-	
+	id = [];
+	lat = [];
+	lon = [];
+
     var reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function(event) {
@@ -61,8 +64,6 @@ function printTable(file, callback) {
             lon.push(data[row][2]);
         }
 		console.log(data);
-		callback && 
-		callback(data);
     };
     reader.onerror = function() {
         alert('Unable to read ' + file.fileName);
